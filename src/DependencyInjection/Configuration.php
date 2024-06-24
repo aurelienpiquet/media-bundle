@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('media_bundle.yaml');
+        $treeBuilder = new TreeBuilder('media_bundle');
 
         $treeBuilder
             ->getRootNode()

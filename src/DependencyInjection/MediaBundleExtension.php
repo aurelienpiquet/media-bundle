@@ -30,7 +30,7 @@ class MediaBundleExtension extends Extension
 
         foreach ($config as $key => $value) {
             if ($value) {
-                $container->setParameter('media_bundle.yaml.' . $key, $value);
+                $container->setParameter('media_bundle.' . $key, $value);
             }
         }
     }

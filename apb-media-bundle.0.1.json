@@ -21,7 +21,7 @@
         ]
       },
       "files": {
-        "config/routes/user_bundle.yaml": {
+        "config/routes/media_bundle.yaml": {
           "contents": [
             "media_bundle.routes:",
             "   resource: '@ApbUserBundle/config/routes.yaml'",
@@ -29,7 +29,7 @@
           ],
           "executable": false
         },
-        "config/packages/user_bundle.yaml": {
+        "config/packages/media_bundle.yaml": {
           "contents": [
             "media_bundle:\n#  configuration:\n#    allowed_mime_types: ['*']"
           ],

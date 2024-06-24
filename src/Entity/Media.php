@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[MappedSuperclass]
-final class Media
+class Media
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::GUID)]

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Apb\MediaBundle\Service;
 
 use Apb\MediaBundle\Entity\Media;
-use Apb\MediaBundle\Repository\MediaRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -19,9 +19,12 @@ readonly class MediaService
         private SluggerInterface $slugger,
         private Filesystem       $filesystem,
         private ParameterBagInterface $bag,
-        private MediaRepository $mediaRepository,
+        private EntityManagerInterface $entityManager,
         private string $defaultDirectory,
     ) {
+        if (!$this->filesystem->exists($this->defaultDirectory)) {
+            $this->filesystem->mkdir($this->defaultDirectory, 0775);
+        }
     }
 
     public function read(Media $media, ?string $path = null): ?string
@@ -37,6 +40,10 @@ readonly class MediaService
 
     public function write(File $file, ?string $path = null, ?string $type = null): Media
     {
+        if ($path && !$this->filesystem->exists($path)) {
+            $this->filesystem->mkdir($path, 0775);
+        }
+
         $originalFilename = pathinfo($file->getBasename(), PATHINFO_FILENAME);
 
         $safeFilename = $this->slugger->slug($originalFilename);
@@ -52,7 +59,8 @@ readonly class MediaService
             ->setType($type)
         ;
 
-        $this->mediaRepository->save($media, true);
+        $this->entityManager->persist($media);
+        $this->entityManager->flush();
 
         $file->move($path ?? $this->defaultDirectory, $newFilename);
 
@@ -66,12 +74,17 @@ readonly class MediaService
         } catch (NotFoundHttpException) {
         }
 
-        $this->mediaRepository->remove($media, true);
+        $this->entityManager->remove($media);
+        $this->entityManager->flush();
     }
 
     private function getExtension(File $file): string
     {
-        $extension = $file->getExtension();
+        $extension = $file->guessExtension();
+
+        if ($extension === "") {
+            throw new BadRequestException('File extension not found.');
+        }
 
         $this->validate($file->getMimeType());
 

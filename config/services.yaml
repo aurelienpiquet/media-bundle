@@ -1,5 +1,5 @@
 parameters:
-    default_directory: '%env(MEDIA_DEFAULT_DIRECTORY)%'
+    default_directory: '%env(resolve:MEDIA_DEFAULT_DIRECTORY)%'
 
 services:
     # default configuration for services in *this* file

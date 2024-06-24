@@ -29,7 +29,7 @@ class Media
     #[Groups(['apb_media', 'apb_media_list'])]
     private ?string $extension = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Groups(['apb_media', 'apb_media_list'])]
     private ?string $type = null;
 

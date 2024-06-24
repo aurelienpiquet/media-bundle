@@ -47,15 +47,8 @@ final readonly class MediaService
             $this->filesystem->mkdir($path, 0775);
         }
 
-        if ($this->bag->get('media_bundle.configuration')['max_size'] !== '*') {
-            $maxSize = (int) str_replace('Mo', '', $this->bag->get('media_bundle.configuration')['max_size']);
-
-            $fileSize = $file->getSize() / 1024000;
-
-            if ($fileSize > $maxSize) {
-                throw new BadRequestHttpException('File size exceeds allowed max size. Check media_bundle.yaml configuration.');
-            }
-        }
+        $this->validateMimeType($file->getMimeType());
+        $this->valideSize((int) $file->getSize());
 
         $originalFilename = pathinfo($file->getBasename(), PATHINFO_FILENAME);
 
@@ -98,13 +91,11 @@ final readonly class MediaService
         if ($extension === "") {
             throw new BadRequestException('File extension not found.');
         }
-
-        $this->validate($file->getMimeType());
-
+        
         return $extension;
     }
 
-    private function validate(string $mimetype): void
+    private function validateMimeType(string $mimetype): void
     {
         $allowedMineTypes = $this->bag->get('media_bundle.configuration')['allowed_mime_types'];
 
@@ -114,6 +105,23 @@ final readonly class MediaService
 
         if (!in_array($mimetype, $allowedMineTypes)) {
             throw new BadRequestException('Mime type is not supported. Check media_bundle.yaml configuration.');
+        }
+    }
+
+    private function valideSize(int $fileSize): void
+    {
+        $configSize = $this->bag->get('media_bundle.configuration')['max_size'];
+
+        if ($configSize === '*') {
+            return;
+        }
+
+        $maxSize = (int) str_replace('Mo', '', $configSize);
+
+        $fileSize = $fileSize / 1024000;
+
+        if ($fileSize > $maxSize) {
+            throw new BadRequestHttpException('File size exceeds allowed max size. Check media_bundle.yaml configuration.');
         }
     }
 }

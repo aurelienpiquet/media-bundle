@@ -3,7 +3,7 @@
     "apb/media-bundle": {
       "manifest": {
         "bundles": {
-          "Apb\\MediaBundle\\ApbUserBundle": [
+          "Apb\\MediaBundle\\ApbMediaBundle": [
             "all"
           ]
         },
@@ -21,14 +21,6 @@
         ]
       },
       "files": {
-        "config/routes/media_bundle.yaml": {
-          "contents": [
-            "media_bundle.routes:",
-            "   resource: '@ApbMediaBundle/config/routes.yaml'",
-            "\n"
-          ],
-          "executable": false
-        },
         "config/packages/media_bundle.yaml": {
           "contents": [
             "media_bundle:\n#  configuration:\n#    allowed_mime_types: ['*']"

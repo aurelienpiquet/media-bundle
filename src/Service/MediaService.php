@@ -10,10 +10,11 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-readonly class MediaService
+final readonly class MediaService
 {
     public function __construct(
         private SluggerInterface $slugger,
@@ -44,6 +45,16 @@ readonly class MediaService
     {
         if ($path && !$this->filesystem->exists($path)) {
             $this->filesystem->mkdir($path, 0775);
+        }
+
+        if ($this->bag->get('media_bundle.configuration')['max_size'] !== '*') {
+            $maxSize = (int) str_replace('Mo', '', $this->bag->get('media_bundle.configuration')['max_size']);
+
+            $fileSize = $file->getSize() / 1024000;
+
+            if ($fileSize > $maxSize) {
+                throw new BadRequestHttpException('File size exceeds media_bundle configuration.');
+            }
         }
 
         $originalFilename = pathinfo($file->getBasename(), PATHINFO_FILENAME);

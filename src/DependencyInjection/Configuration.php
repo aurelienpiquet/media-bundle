@@ -23,8 +23,8 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('configuration')
                     ->addDefaultsIfNotSet()
                         ->children()
-                        ->scalarNode('default_path')->defaultValue('%kernel.project_dir%/private/files')->end()
                         ->append($this->getAllowedMineTypes())
+                        ->scalarNode('max_size')->defaultValue('2Mo')->end()
                 ->end()
             ->end()
         ;

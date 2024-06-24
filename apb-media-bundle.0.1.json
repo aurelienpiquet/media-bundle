@@ -14,16 +14,16 @@
           "/%CONFIG_DIR%/jwt/*.pem"
         ],
         "env": {
-          "MEDIA_DEFAULT_DIRECTORY": "'%kernel.project_dir%/private/files'"
+          "MEDIA_DEFAULT_DIRECTORY": "'%kernel.project_dir%/private/files/'"
         },
         "post-install-output": [
-          "  1. <bg=magenta;fg=white> Configure media_bundle.yaml </>"
+          "  1. <bg=magenta;fg=white> Configure media_bundle.yaml</>"
         ]
       },
       "files": {
         "config/packages/media_bundle.yaml": {
           "contents": [
-            "media_bundle:\n#  configuration:\n#    allowed_mime_types: ['*']"
+            "#media_bundle:\n#  configuration:\n#    allowed_mime_types: ['*']\n#    max_size: '2Mo'"
           ],
           "executable": false
         }

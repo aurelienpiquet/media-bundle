@@ -95,7 +95,7 @@ readonly class MediaService
 
     private function validate(string $mimetype): void
     {
-        $allowedMineTypes = $this->bag->get('media_bundle.configuration')['allowed_mine_types'];
+        $allowedMineTypes = $this->bag->get('media_bundle.configuration')['allowed_mime_types'];
 
         if (in_array('*', $allowedMineTypes) || count($allowedMineTypes) === 0) {
             return;

@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
 
     private function getAllowedMineTypes(): ArrayNodeDefinition
     {
-        $node = new ArrayNodeDefinition('allowed_mine_types');
+        $node = new ArrayNodeDefinition('allowed_mime_types');
 
         $node
             ->beforeNormalization()

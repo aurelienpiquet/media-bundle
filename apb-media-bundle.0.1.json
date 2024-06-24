@@ -1,0 +1,42 @@
+{
+  "manifests": {
+    "apb/media-bundle": {
+      "manifest": {
+        "bundles": {
+          "Apb\\UserBundle\\ApbUserBundle": [
+            "all"
+          ]
+        },
+        "copy-from-recipe": {
+          "config/": "%CONFIG_DIR%"
+        },
+        "gitignore": [
+          "/%CONFIG_DIR%/jwt/*.pem"
+        ],
+        "env": {
+          "MEDIA_DEFAULT_DIRECTORY": "'%kernel.project_dir%/private/files'"
+        },
+        "post-install-output": [
+          "  1. <bg=magenta;fg=white> Configure media_bundle.yaml </>"
+        ]
+      },
+      "files": {
+        "config/routes/user_bundle.yaml": {
+          "contents": [
+            "media_bundle.routes:",
+            "   resource: '@ApbUserBundle/config/routes.yaml'",
+            "\n"
+          ],
+          "executable": false
+        },
+        "config/packages/user_bundle.yaml": {
+          "contents": [
+            "media_bundle:\n#  configuration:\n#    allowed_mime_types: ['*']"
+          ],
+          "executable": false
+        }
+      },
+      "ref": "33ddc9bbec0d0914a538d3ada38cbb21f6098934"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "apb/media-bundle",
+    "version": "0.1",
+    "description": "A bundle to create media and process files",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Apb\\MediaBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aurelien Piquet"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "friendsofsymfony/rest-bundle": ">=3.3",
+        "doctrine/orm": ">=2.2",
+        "nelmio/api-doc-bundle": ">=4.11"
+    },
+    "extra": {
+        "symfony": {
+            "endpoint": [
+                "https://api.github.com/repos/aurelienpiquet/media-bundle/contents/index.json",
+                "flex://defaults"
+            ]
+        }
+    }
+}

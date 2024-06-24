@@ -1,0 +1,14 @@
+{
+  "recipes": {
+    "apb/media-bundle": [
+      "0.1"
+    ]
+  },
+  "branch": "main",
+  "is_contrib": true,
+  "_links": {
+    "repository": "github.com/aurelienpiquet/media-bundle",
+    "origin_template": "{package}:{version}@github.com/aurelienpiquet/media-bundle:main",
+    "recipe_template": "https://api.github.com/repos/aurelienpiquet/media-bundle/contents/apb-media-bundle.{version}.json"
+  }
+}

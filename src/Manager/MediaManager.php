@@ -27,6 +27,13 @@ readonly class MediaManager
         $this->mediaService->delete($media, $path);
     }
 
+    public function read(string $id, ?string $path = null): ?string
+    {
+        $media = $this->fetch($id);
+
+        return $this->mediaService->read($media, $path);
+    }
+
     public function fetch(string $id): Media
     {
         $media = $this->mediaRepository->fetch($id);

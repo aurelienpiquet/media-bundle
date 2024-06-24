@@ -31,11 +31,13 @@ readonly class MediaService
     {
         $fileSystem = new Filesystem();
 
-        if (!$fileSystem->exists($path ?? $this->defaultDirectory . $media->getName())) {
+        $path = $path ?? $this->defaultDirectory . $media->getName();
+
+        if (!$fileSystem->exists($path)) {
             throw new NotFoundHttpException('File doesnt exist.');
         }
 
-        return $path . $media->getName();
+        return $path;
     }
 
     public function write(File $file, ?string $path = null, ?string $type = null): Media

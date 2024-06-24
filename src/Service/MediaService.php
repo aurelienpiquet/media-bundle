@@ -53,7 +53,7 @@ final readonly class MediaService
             $fileSize = $file->getSize() / 1024000;
 
             if ($fileSize > $maxSize) {
-                throw new BadRequestHttpException('File size exceeds media_bundle configuration.');
+                throw new BadRequestHttpException('File size exceeds allowed max size. Check media_bundle.yaml configuration.');
             }
         }
 
@@ -113,7 +113,7 @@ final readonly class MediaService
         }
 
         if (!in_array($mimetype, $allowedMineTypes)) {
-            throw new BadRequestException('Mime type is not supported. Check apb/media-bundle configuration.');
+            throw new BadRequestException('Mime type is not supported. Check media_bundle.yaml configuration.');
         }
     }
 }
